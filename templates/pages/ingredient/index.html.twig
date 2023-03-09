@@ -10,6 +10,13 @@
 			<h1>
 				Mes ingrédients
 			</h1>
+
+			<a href="{{path('ingredient_new')}}" class="btn btn-primary">Créer un ingrédent</a>
+			{% for message in app.flashes('success')%}
+				<div class="alert alert-success mt-4">
+					{{message}}
+				</div>
+			{% endfor %}
 			{# total items count #}
 			<div class="count mt-4">
 				Il y a

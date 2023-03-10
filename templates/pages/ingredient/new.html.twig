@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+	SymRecipe - Nouveau ingrédient
+{% endblock %}
 
 {% block body %}
 
@@ -14,7 +17,7 @@
 			{{form_label(form.name)}}
 			{{ form_widget(form.name) }}
 			<div class="form-error">
-				{{ form_errors(form.price) }}
+				{{ form_errors(form.name) }}
 			</div>
 		</div>
 		<div class="form-group">

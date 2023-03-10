@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymRecipe - Mes recettes
+{% endblock %}
+
+{% block body %}
+
+	<div class="container mt-4">
+		{% if not recipes.items is same as ([])%}
+			<h1>
+				Mes Recettes
+			</h1>
+			<a href="{{path('recipe_new')}}" class="btn btn-primary">Créer une nouvelle recette</a>
+
+			{% for message in app.flashes('success')%}
+				<div class="alert alert-success mt-4">
+					{{message}}
+				</div>
+			{% endfor %}
+			{# total items count #}
+			<div class="count mt-4">
+				Il y a
+				{{ recipes.getTotalItemCount }}
+				recettes au total
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Numéro</th>
+						<th scope="col">Nom</th>
+						<th scope="col">Prix</th>
+						<th scope="col">Difficulté</th>
+						<th scope="col">Date de création</th>
+						<th scope="col">Modifier</th>
+						<th scope="col">Supprimer</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for recipes in recipes %}
+						<tr class="table-primary">
+							<th scope="row">{{recipes.id}}</th>
+							<td>{{recipes.name}}</td>
+							<td>
+								{% if recipes.price is null %}
+									Non renseigné
+								{% else %}
+									{{recipes.price}}
+									€
+								{% endif %}
+							</td>
+							<td>
+								{% if recipes.difficulty is null %}
+									Non renseigné
+								{% else %}
+									{{recipes.difficulty}}
+								{% endif %}
+							</td>
+							<td>{{recipes.createdAt|date("d/m/Y")}}</td>
+							<td>
+								<a href="{{path('recipe_edit', { id: recipes.id} )}} " class="btn btn-info">
+									Modifier</a>
+							</td>
+							<td>
+								<a href="{{path('recipe_delete', { id: recipes.id} )}} " class="btn btn-warning">
+									Supprimer</a>
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</tbody>
+		</table>
+		{# display navigation #}
+		<div class="navigation d-flex justify-content-center mt-4">{{ knp_pagination_render(recipes) }}</div>
+	{% else %}
+		<div>Il n'y a pas de recettes</div>
+	{% endif %}
+</div>{% endblock %}

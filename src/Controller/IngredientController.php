@@ -23,7 +23,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
 
-    #[Route('/ingredient', name: 'app_ingredient', methods: ['GET'])]
+    #[Route('/ingredients', name: 'app_ingredient', methods: ['GET'])]
     public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $ingredients = $paginator->paginate(
@@ -34,7 +34,7 @@ class IngredientController extends AbstractController
         return $this->render('pages/ingredient/index.html.twig', ['ingredients' => $ingredients]);
     }
     /**
-     * This controller allow  to add ingredients with a form
+     * This controller allow us  to add ingredients
      *
      * @param Request $request
      * @param EntityManagerInterface $manager

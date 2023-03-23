@@ -28,15 +28,17 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/deconnexion', name: 'security_logout')]
+    #[Route('/deconnexion', name: 'security_logout', methods: ['GET'])]
     /**
      * this controller allow us to logout
      *
-     * @return void
+     *
      */
     public function logout()
     {
+        //nothing to do here, symfony will handle it
     }
+
 
     #[Route('/inscription', name: 'security_register', methods: ['GET', 'POST'])]
     /**

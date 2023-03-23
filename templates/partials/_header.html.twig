@@ -7,17 +7,45 @@
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav me-auto">
 				<li class="nav-item">
-					<a class="nav-link active" href="#">Accueil
+					<a class="nav-link active" href={{path('home_index')}}>Accueil
 						<span class="visually-hidden">(current)</span>
 					</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href={{path('app_ingredient')}}>Mes ingrédients</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href={{path('app_recipe')}}>Mes recettes</a>
-				</li>
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link" href={{path('app_ingredient')}}>Mes ingrédients</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href={{path('app_recipe')}}>Mes recettes</a>
+					</li>
+				{% endif %}
 			</ul>
+			<div class="d-flex">
+				<ul class="navbar-nav me-auto">
+					{% if app.user %}
+						<li
+							class="nav-item dropdown" style="margin-right : 5rem">
+							{# à modifier en css #}
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.fullname}}</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href={{path('user_edit', {id :app.user.id} )}}>Modifier mes informations</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href={{path('user_edit_password', {id :app.user.id} )}}>Modifier mon mot de passe</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href={{path('security_logout')}}>Déconnexion</a>
+							</div>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href={{path('security_login')}}>Se connecter</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href={{path('security_register')}}>S'enregistrer</a>
+						</li>
+					{% endif %}
+
+				</ul>
+			</div>
 		</div>
 	</div>
 </nav>

@@ -7,10 +7,12 @@ use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class IngredientController extends AbstractController
 {
@@ -24,6 +26,7 @@ class IngredientController extends AbstractController
      */
 
     #[Route('/ingredients', name: 'app_ingredient', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $ingredients = $paginator->paginate(
@@ -41,6 +44,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient/nouveau', name: 'ingredient_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $ingredient = new Ingredient();
@@ -72,7 +76,9 @@ class IngredientController extends AbstractController
      * @param Ingredient $ingredient
      * @return Response
      */
+
     #[Route('/ingredient/edition/{id}', name: 'ingredient_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER') and user  === ingredient.getUser()")]
     public function edit(Ingredient $ingredient, Request $request, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(IngredientType::class, $ingredient);
@@ -104,6 +110,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route('/ingredient/supression/{id}', name: 'ingredient_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_USER') and user  === ingredient.getUser()")]
     public function delete(EntityManagerInterface $manager, Ingredient $ingredient): Response
     {
         $manager->remove($ingredient);

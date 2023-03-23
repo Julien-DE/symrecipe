@@ -7,10 +7,12 @@ use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RecipeController extends AbstractController
 {
@@ -23,6 +25,7 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[Route('/recettes', name: 'app_recipe', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(PaginatorInterface $paginator, RecipeRepository $repository, Request $request): Response
     {
         $recipes = $paginator->paginate(
@@ -42,6 +45,7 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[Route('/recettes/creation', name: 'recipe_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $recipe = new Recipe();
@@ -79,6 +83,7 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[Route('/recettes/edition/{id}', name: 'recipe_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER') and user  === recipe.getUser()")]
     public function edit(Recipe $recipe, Request $request, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -108,6 +113,7 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[Route('/recettes/supression/{id}', name: 'recipe_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_USER') and user  === recipe.getUser()")]
     public function delete(EntityManagerInterface $manager, Recipe $recipe): Response
     {
         $manager->remove($recipe);

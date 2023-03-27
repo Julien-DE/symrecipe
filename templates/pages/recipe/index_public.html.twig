@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymRecipe - Mes recettes
+{% endblock %}
+
+{% block body %}
+
+	<div class="container mt-4">
+		{% if not recipes.items is same as ([])%}
+			<h1>
+				Recette de la communauté
+			</h1>
+			<div class="d-flex justify-content-center flex-wrap">
+				{% for recipe in recipes %}
+					<div class="card text-white bg-info mb-3 mx-3" style=" max-width: 20rem;">
+						<div class="card-header">Recette n°
+							{{ recipe.id}}</div>
+						<div class="card-body">
+							<h4 class="card-title">{{recipe.name}}</h4>
+							<p class="card-text">{{recipe.description|slice(0,100) ~ '...' }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="navigation d-flex justify-content-center mt-4">{{ knp_pagination_render(recipes) }}</div>
+		{% else %}
+			<div>Il n'y a pas de recettes</div>
+		{% endif %}
+	</div>
+{% endblock %}

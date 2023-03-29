@@ -60,6 +60,17 @@
 				{{ form_errors(form.isFavorite) }}
 			</div>
 		</div>
+		{{ form_row(form.imageFile) }}
+
+		{{form_label(form.ingredients)}}
+		<div id="ingredients-wrapper">
+			{% for field in form.ingredients %}
+				<div>
+					{{form_widget(field)}}
+					{{form_label(field)}}
+				</div>
+			{% endfor %}
+		</div>
 
 		{{ form_end(form) }}
 	</div>

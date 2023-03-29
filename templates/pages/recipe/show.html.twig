@@ -79,6 +79,11 @@
 				<span class="badge rounded-pill bg-primary">{{ingredient.name}}</span>
 			{% endfor %}
 		</div>
+		<div class="recipe_image mt-4">
+			<img
+			style="max-width: 400px" src=" {{ vich_uploader_asset(recipe, 'imageFile') }} ">
+		{# todo #}
+		</div>
 		<div class="mark">
 			{{form(form)}}
 			</div>

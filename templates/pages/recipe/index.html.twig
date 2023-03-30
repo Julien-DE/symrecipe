@@ -6,12 +6,12 @@
 {% block body %}
 
 	<div class="container mt-4">
-		{% if not recipes.items is same as ([])%}
-			<h1>
-				Mes Recettes
-			</h1>
-			<a href="{{path('recipe_new')}}" class="btn btn-primary">Créer une nouvelle recette</a>
 
+		<h1>
+			Mes Recettes
+		</h1>
+		<a href="{{path('recipe_new')}}" class="btn btn-primary">Créer une nouvelle recette</a>
+		{% if not recipes.items is same as ([])%}
 			{% for message in app.flashes('success')%}
 				<div class="alert alert-success mt-4">
 					{{message}}
@@ -72,6 +72,6 @@
 		{# display navigation #}
 		<div class="navigation d-flex justify-content-center mt-4">{{ knp_pagination_render(recipes) }}</div>
 	{% else %}
-		<div>Il n'y a pas de recettes</div>
+		<div class="mt-4">Il n'y a pas de recettes</div>
 	{% endif %}
 </div>{% endblock %}

@@ -50,8 +50,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         min: 2,
         max: 50
     )]
-    private ?string $fullName = null;
 
+    private ?string $fullName = null;
     #[ORM\Column(length: 50, nullable: true)]
     #[Assert\Length(
         min: 2,

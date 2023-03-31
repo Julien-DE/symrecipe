@@ -6,13 +6,11 @@
 {% block body %}
 
 	<div class="container mt-4">
+		<h1>
+			Mes ingrédients
+		</h1>
+		<a href="{{path('ingredient_new')}}" class="btn btn-primary">Créer un ingrédent</a>
 		{% if not ingredients.items is same as ([])%}
-			<h1>
-				Mes ingrédients
-			</h1>
-
-			<a href="{{path('ingredient_new')}}" class="btn btn-primary">Créer un ingrédent</a>
-
 			{% for message in app.flashes('success')%}
 				<div class="alert alert-success mt-4">
 					{{message}}
@@ -61,7 +59,7 @@
 				{{ knp_pagination_render(ingredients) }}
 			</div>
 		{% else %}
-			<div>
+			<div class="mt-4">
 				Il n'y a pas d'ingrédients</div>
 		{% endif %}
 	</div>

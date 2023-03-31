@@ -34,6 +34,10 @@
 								<a class="dropdown-item" href={{path('user_edit', {id :app.user.id} )}}>Modifier mes informations</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href={{path('user_edit_password', {id :app.user.id} )}}>Modifier mon mot de passe</a>
+								{% if 'ROLE_ADMIN' in app.user.roles %}
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href={{path('admin')}}>Administration du site</a>
+								{% endif %}
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href={{path('security_logout')}}>Déconnexion</a>
 							</div>
